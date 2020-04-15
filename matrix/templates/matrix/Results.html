@@ -1,0 +1,48 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Round {{ round }} - Results
+{% endblock %}
+
+{% block styles %}
+    <style>
+        th, td {
+            padding: 4px 6px 4px 6px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <table>
+        <thead>
+        <tr>
+            <th>Player</th>
+            <th colspan="{{ num_rounds }}">Data</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for player in players %}
+        <tr>
+            <td>
+                P{{ player.participant.id_in_session }}
+            </td>
+            {% for i in player.participant.vars.data %}
+                <td>
+                    {% if i.answer %}
+                        {% if i.answer == i.correct_answer %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% next_button %}
+{% endblock %}
